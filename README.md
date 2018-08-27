@@ -35,8 +35,12 @@ Now start up the docker container
 ```
 sudo yum install -y docker
 sudo service docker start
+sudo usermod -aG docker ec2-user
+```
+Re-ssh into the machine for the ec2-user permissions to take
+```
 sudo docker build -t houses .
-docker run  -e PASSWORD=pass -p 80:80 -v /Users/ec2-user/home/house_price_stan:/home/rstudio/house houses
+docker run  -e PASSWORD=pass -p 80:80 -v /home/ec2-user/house_price_stan:/home/rstudio/house_price_stan houses
 
 ```
 
