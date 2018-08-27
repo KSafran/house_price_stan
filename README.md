@@ -42,10 +42,14 @@ Re-ssh into the machine for the ec2-user permissions to take
 docker build -t houses .
 docker run -d -e PASSWORD=pass -p 80:80 houses
 docker exec -it houses
-Rscript model.R
+nohup Rscript model.R
+exit
+docker cp <containerId>:/app/data/model_data.rds ~
 ```
-
-This is probably not the best way to handle these docker containers. We should probably run the modeling script inside the container with the volumes mapped.
+Go back to your machine and scp down the model file
+```
+scp -i <keyfile.pem> ec2-user@<ip address>:~/model_data.rds .
+```
 
 
 
