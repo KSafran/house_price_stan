@@ -1,6 +1,10 @@
+# Setup
 source('utils.R')
 library(dplyr)
 library(rstan)
+
+n_cores <- parallel::detectCores()
+
 data <- load_data()
 
 # Remove some outliers
@@ -41,7 +45,8 @@ create_model_data <- function(data){
 stan_data <- create_model_data(transformed$data)
 stancode <- stan_model('model.stan')
 fit <- sampling(stancode, data = stan_data,
-                    chains = 2, iter = 10, warmup = 2,
-                    cores = parallel::detectCores())
+                chains = min(c(n_cores, 4)), 
+                iter = 2000, warmup = 1000,
+                cores = n_cores)
 saveRDS(fit, 'data/model_fit.rds')
 
