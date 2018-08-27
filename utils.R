@@ -1,5 +1,6 @@
 library(dplyr)
 library(tidyr)
+library(forecast)
 
 # Load Data
 load_data <- function(){

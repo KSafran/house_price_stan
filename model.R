@@ -1,5 +1,6 @@
 source('utils.R')
 library(dplyr)
+library(rstan)
 data <- load_data()
 
 # Remove some outliers
@@ -40,7 +41,7 @@ create_model_data <- function(data){
 stan_data <- create_model_data(transformed$data)
 stancode <- stan_model('model.stan')
 fit <- sampling(stancode, data = stan_data,
-                    chains = 2, iter = 2000, warmup = 500,
+                    chains = 2, iter = 10, warmup = 2,
                     cores = parallel::detectCores())
-
+saveRDS(fit, 'data/model_fit.rds')
 
