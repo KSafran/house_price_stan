@@ -40,9 +40,11 @@ sudo usermod -aG docker ec2-user
 Re-ssh into the machine for the ec2-user permissions to take
 ```
 sudo docker build -t houses .
-docker run  -e PASSWORD=pass -p 80:80 -v /home/ec2-user/house_price_stan:/home/rstudio/house_price_stan houses
-
+docker run -d -e PASSWORD=pass -p 80:80 houses
+docker cp 2cae4d176126:/data/model_fit.rds ~/house_price_stan/data/
 ```
+
+This is probably not the best way to handle these docker containers. We should probably run the modeling script inside the container with the volumes mapped.
 
 
 
