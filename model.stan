@@ -1,5 +1,6 @@
 data{
   int<lower=0> n;
+  int<lower=0> n_test;
   int<lower=0> n_Neighborhood; 
   int<lower=0> n_MSSubClass; 
   int<lower=0> n_MSZoning; 
@@ -44,6 +45,31 @@ data{
   vector[n] LotArea;
   vector[n] GrLivArea;
   vector[n] y;
+  
+  matrix[n_test, n_Neighborhood] test_Neighborhood; 
+  matrix[n_test, n_MSSubClass] test_MSSubClass; 
+  matrix[n_test, n_MSZoning] test_MSZoning; 
+  matrix[n_test, n_LandContour] test_LandContour; 
+  matrix[n_test, n_LotConfig] test_LotConfig;
+  matrix[n_test, n_BldgType] test_BldgType;  
+  matrix[n_test, n_HouseStyle] test_HouseStyle; 
+  matrix[n_test, n_OverallQual] test_OverallQual; 
+  matrix[n_test, n_OverallCond] test_OverallCond; 
+  matrix[n_test, n_Exterior1st] test_Exterior1st;
+  matrix[n_test, n_Foundation] test_Foundation; 
+  matrix[n_test, n_BsmtFinType1] test_BsmtFinType1; 
+  matrix[n_test, n_CentralAir] test_CentralAir; 
+  matrix[n_test, n_BedroomAbvGr] test_BedroomAbvGr; 
+  matrix[n_test, n_KitchenQual] test_KitchenQual;
+  matrix[n_test, n_Functional] test_Functional; 
+  matrix[n_test, n_GarageType] test_GarageType; 
+  matrix[n_test, n_SaleCondition] test_SaleCondition;
+  
+  vector[n_test] test_railroad;
+  vector[n_test] test_hbath;
+  vector[n_test] test_fbath;
+  vector[n_test] test_LotArea;
+  vector[n_test] test_GrLivArea;
 }
 
 parameters{
@@ -80,4 +106,9 @@ transformed parameters{
 }
 model{
   y ~ normal(yhat, sigma_y);
+}
+generated quantities{
+  vector[n_test] y_pred;
+  y_pred = b_0 + test_Neighborhood * b_Neighborhood + test_MSSubClass * b_MSSubClass + test_MSZoning * b_MSZoning + test_LandContour * b_LandContour + test_LotConfig * b_LotConfig +BldgType * b_BldgType + test_ HouseStyle * b_HouseStyle + test_OverallQual * b_OverallQual + test_OverallCond * b_OverallCond + test_Exterior1st * b_Exterior1st +Foundation * b_Foundation + test_BsmtFinType1 * b_BsmtFinType1 + test_CentralAir * b_CentralAir + test_BedroomAbvGr * b_BedroomAbvGr + test_KitchenQual * b_KitchenQual +Functional * b_Functional + test_ GarageType * b_GarageType + test_SaleCondition * b_SaleCondition + test_railroad * b_railroad + test_hbath * b_hbath + test_fbath * b_fbath + test_LotArea * b_LotArea + test_GrLivArea * b_GrLivArea;
+  
 }
