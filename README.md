@@ -41,14 +41,14 @@ Re-ssh into the machine for the ec2-user permissions to take
 ```
 docker build -t houses .
 docker run -d -e PASSWORD=pass -p 80:80 houses
-docker exec -it houses /bin/bash
+docker exec -it <containerId> /bin/bash
 nohup Rscript model.R
 exit
-docker cp <containerId>:/app/data/model_data.rds ~
+docker cp <containerId>:/app/data/model_fit.rds ~
 ```
 Go back to your machine and scp down the model file
 ```
-scp -i <keyfile.pem> ec2-user@<ip address>:~/model_data.rds .
+scp -i <keyfile.pem> ec2-user@<ip address>:~/model_fit.rds .
 ```
 
 
