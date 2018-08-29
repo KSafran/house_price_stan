@@ -63,5 +63,51 @@ transform <- function(data, lambdas=NULL){
   }
   data[, cols_boxcox] <- mapply(BoxCox, data[, cols_boxcox], lambdas)
   
+  # Train/Test Split Problem Variables
+  data$MSSubClass[data$MSSubClass == '150'] <- 160 # 1.5 Story PUD -> 2 Story PUD
+  
+  
   return(list(data = data, lambdas = lambdas))
 }
+
+create_model_data <- function(data, test_data){
+  stan_data <- list(n = nrow(data),
+                    n_test = nrow(test_data))
+  cat_vars <- c('Neighborhood', 'MSSubClass', 'MSZoning', 'LandContour', 'LotConfig',
+                'BldgType',  'HouseStyle', 'OverallQual', 'OverallCond', 'Exterior1st',
+                'Foundation', 'BsmtFinType1', 'CentralAir', 'BedroomAbvGr', 'KitchenQual',
+                'Functional', 'GarageType', 'SaleCondition')
+  for(var in cat_vars){
+    form <- formula(paste0('~ ', var, ' - 1'))
+    stan_data[[var]] <- model.matrix(form, data)
+    stan_data[[paste0('n_', var)]] <- ncol(stan_data[[var]])
+    var_list = list()
+    var_list[[var]] = sort(unique(data[,var]))
+    stan_data[[paste0('test_', var)]] <- model.matrix(form, test_data,
+                                                      xlev = var_list)
+    if(!all(colnames(stan_data[[paste0('test_', var)]]) == colnames(stan_data[[var]]))){
+      print(var)
+    }
+  }
+  
+  # Custom 
+  stan_data[['railroad']] <- as.numeric(grepl('RR', data$Condition1))
+  stan_data[['hbath']] <- as.numeric(data$HalfBath > 0)
+  stan_data[['fbath']] <- as.numeric(data$FullBath > 1)
+  
+  stan_data[['test_railroad']] <- as.numeric(grepl('RR', test_data$Condition1))
+  stan_data[['test_hbath']] <- as.numeric(test_data$HalfBath > 0)
+  stan_data[['test_fbath']] <- as.numeric(test_data$FullBath > 1)
+  
+  # Continuous
+  stan_data[['LotArea']] <- data$LotArea
+  stan_data[['GrLivArea']] <- data$GrLivArea
+  
+  stan_data[['test_LotArea']] <- test_data$LotArea
+  stan_data[['test_GrLivArea']] <- test_data$GrLivArea
+  
+  stan_data[['y']] <- data$logSalePrice
+  
+  return(stan_data)
+}
+

@@ -109,6 +109,5 @@ model{
 }
 generated quantities{
   vector[n_test] y_pred;
-  y_pred = b_0 + test_Neighborhood * b_Neighborhood + test_MSSubClass * b_MSSubClass + test_MSZoning * b_MSZoning + test_LandContour * b_LandContour + test_LotConfig * b_LotConfig +BldgType * b_BldgType + test_ HouseStyle * b_HouseStyle + test_OverallQual * b_OverallQual + test_OverallCond * b_OverallCond + test_Exterior1st * b_Exterior1st +Foundation * b_Foundation + test_BsmtFinType1 * b_BsmtFinType1 + test_CentralAir * b_CentralAir + test_BedroomAbvGr * b_BedroomAbvGr + test_KitchenQual * b_KitchenQual +Functional * b_Functional + test_ GarageType * b_GarageType + test_SaleCondition * b_SaleCondition + test_railroad * b_railroad + test_hbath * b_hbath + test_fbath * b_fbath + test_LotArea * b_LotArea + test_GrLivArea * b_GrLivArea;
-  
+  y_pred = b_0 + test_Neighborhood * b_Neighborhood + test_MSSubClass * b_MSSubClass + test_MSZoning * b_MSZoning + test_LandContour * b_LandContour + test_LotConfig * b_LotConfig + test_BldgType * b_BldgType + test_HouseStyle * b_HouseStyle + test_OverallQual * b_OverallQual + test_OverallCond * b_OverallCond + test_Exterior1st * b_Exterior1st + test_Foundation * b_Foundation + test_BsmtFinType1 * b_BsmtFinType1 + test_CentralAir * b_CentralAir + test_BedroomAbvGr * b_BedroomAbvGr + test_KitchenQual * b_KitchenQual + test_Functional * b_Functional + test_GarageType * b_GarageType + test_SaleCondition * b_SaleCondition + test_railroad * b_railroad + test_hbath * b_hbath + test_fbath * b_fbath + test_LotArea * b_LotArea + test_GrLivArea * b_GrLivArea;
 }
