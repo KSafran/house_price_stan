@@ -41,7 +41,7 @@ Re-ssh into the machine for the ec2-user permissions to take
 ```
 docker build -t houses .
 docker run -d -e PASSWORD=pass -p 80:80 houses
-docker exec -it houses
+docker exec -it houses /bin/bash
 nohup Rscript model.R
 exit
 docker cp <containerId>:/app/data/model_data.rds ~
