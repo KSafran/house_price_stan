@@ -98,7 +98,7 @@ parameters{
   real b_LotArea;
   real b_GrLivArea;
   real b_0;
-  real sigma_y;
+  real<lower=0> sigma_y;
 }
 transformed parameters{
   vector[n] yhat;
