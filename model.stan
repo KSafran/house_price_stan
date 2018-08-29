@@ -124,6 +124,7 @@ model{
   b_Functional ~ normal(0, 3);
   b_GarageType ~ normal(0, 1);
   b_SaleCondition ~ normal(0, 5);
+  b_0 ~ normal(12, 10);
 
   // model
   y ~ normal(yhat, sigma_y);
