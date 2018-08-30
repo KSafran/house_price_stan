@@ -27,7 +27,7 @@ stan_data <- create_model_data(train_transformed$data, test_transformed$data)
 stancode <- stan_model('model.stan')
 fit <- sampling(stancode, data = stan_data,
                 chains = min(c(n_cores, 4)), 
-                iter = 2000, warmup = 1000,
+                iter = 4, warmup = 2,
                 cores = n_cores)
 saveRDS(fit, 'data/model_fit.rds')
 
