@@ -106,25 +106,25 @@ transformed parameters{
 }
 model{
   // priors
-  b_Neighborhood ~ normal(0, 6);
-  b_MSSubClass ~ normal(0, 6);
-  b_MSZoning ~ normal(0, 4);
-  b_LandContour ~ normal(0, 2);
-  b_LotConfig ~ normal(0, 1);
-  b_BldgType ~ normal(0, 3);
-  b_HouseStyle ~ normal(0, 3);
-  b_OverallQual ~ normal(0, 4);
-  b_OverallCond ~ normal(0, 4);
-  b_Exterior1st ~ normal(0, 2);
-  b_Foundation ~ normal(0, 2);
-  b_BsmtFinType1 ~ normal(0, 3);
-  b_CentralAir ~ normal(0, 3);
-  b_BedroomAbvGr ~ normal(0, 2);
-  b_KitchenQual ~ normal(0, 3);
-  b_Functional ~ normal(0, 3);
-  b_GarageType ~ normal(0, 1);
-  b_SaleCondition ~ normal(0, 5);
-  b_0 ~ normal(12, 10);
+  b_Neighborhood ~ normal(0, 2);
+  b_MSSubClass ~ normal(0, 2);
+  b_MSZoning ~ normal(0, 2);
+  b_LandContour ~ normal(0, 1);
+  b_LotConfig ~ normal(0, 0.5);
+  b_BldgType ~ normal(0, 1);
+  b_HouseStyle ~ normal(0, 1);
+  b_OverallQual ~ normal(0, 2);
+  b_OverallCond ~ normal(0, 2);
+  b_Exterior1st ~ normal(0, 1);
+  b_Foundation ~ normal(0, 0.5);
+  b_BsmtFinType1 ~ normal(0, 0.5);
+  b_CentralAir ~ normal(0, 0.5);
+  b_BedroomAbvGr ~ normal(0, 1);
+  b_KitchenQual ~ normal(0, 1);
+  b_Functional ~ normal(0, 1);
+  b_GarageType ~ normal(0, 0.5);
+  b_SaleCondition ~ normal(0, 2);
+  b_0 ~ normal(12, 4);
 
   // model
   y ~ normal(yhat, sigma_y);
