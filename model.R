@@ -28,6 +28,6 @@ stancode <- stan_model('model.stan')
 fit <- sampling(stancode, data = stan_data,
                 chains = min(c(n_cores, 4)), 
                 iter = 2000, warmup = 1000,
-                cores = n_cores, control = list(stepsize=3))
+                cores = n_cores)
 saveRDS(fit, 'data/model_fit.rds')
 
