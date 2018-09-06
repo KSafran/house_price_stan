@@ -2,6 +2,7 @@
 source('utils.R')
 library(dplyr)
 library(rstan)
+library(ggplot2)
 
 n_cores <- parallel::detectCores()
 
@@ -15,14 +16,14 @@ data$train <- data$train %>%
 # predict log (sales price - misc features)
 data$train$logSalePrice <- log(data$train$SalePrice - data$train$MiscVal)
 
-train_replaced <- replace_missing(data$train)
-test_replaced <- replace_missing(data$test, train_replaced$modes)
-
-train_transformed <- transform(train_replaced$data)
-test_transformed <- transform(test_replaced$data, lambdas = train_transformed$lambdas)
-
 # Model Data
-stan_data <- create_model_data(train_transformed$data, test_transformed$data)
+stan_data <- list(n = nrow(data$train),
+                  GrLivArea = log(data$train$GrLivArea),
+                  GrLivArea2 = log(data$train$GrLivArea)**2,
+                  y = data$train$logSalePrice,
+                  n_test = nrow(data$test),
+                  test_GrLivArea = log(data$test$GrLivArea),
+                  test_GrLivArea2 = log(data$test$GrLivArea)**2)
 
 stancode <- stan_model('model.stan')
 fit <- sampling(stancode, data = stan_data,
@@ -31,3 +32,6 @@ fit <- sampling(stancode, data = stan_data,
                 cores = n_cores)
 saveRDS(fit, 'data/model_fit_smaller.rds')
 
+preds <- rstan::extract(fit, 'y_pred')
+predictions <- colMeans(preds[[1]])
+library(ggplot2)
