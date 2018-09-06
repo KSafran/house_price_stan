@@ -1,5 +1,5 @@
 # Inspect Model
 library(shinystan)
-model <- readRDS('data/model_fit_8_30.rds')
+model <- readRDS('data/model_fit_smaller.rds')
 
 shinystan::launch_shinystan(model)
