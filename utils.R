@@ -18,6 +18,13 @@ Mode <- function(x) {
   ux[which.max(tabulate(match(x, ux)))]
 }
 
+fill_to_first <- function(x){
+  # 0 0 0 1 0 -> 1 1 1 1 0 
+  rev(cummax(rev(x)))
+}
+assertthat::are_equal(fill_to_first(c(0, 1, 0)), 
+                      c(1, 1, 0))
+
 replace_missing <- function(data, modes=NULL){
   # Fill with 'missing'
   cols_missing <- c('PoolQC', 'Alley', 'Fence', 'FireplaceQu', 'GarageType',
