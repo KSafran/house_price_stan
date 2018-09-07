@@ -34,4 +34,7 @@ saveRDS(fit, 'data/model_fit_smaller.rds')
 
 preds <- rstan::extract(fit, 'y_pred')
 predictions <- colMeans(preds[[1]])
-library(ggplot2)
+
+ggplot() +
+  geom_point(aes(x = data$train$GrLivArea, y = data$train$logSalePrice)) +
+  geom_point(aes(x = data$test$GrLivArea, y = predictions), col = 'blue')
